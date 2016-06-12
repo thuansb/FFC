@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Random Quote Machine</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+  <link href='https://fonts.googleapis.com/css?family=Dancing+Script:700' rel='stylesheet' type='text/css'>
+  <style media="screen">
+  body {
+    margin: 100px auto;
+    font-family: Dancing Script;
+  }
+
+  h1 {
+    font-size: 60px;
+  }
+
+  #content {
+    font-size: 30px;
+  }
+
+  cite {
+    font-size: 20px;
+  }
+
+  .random-btn {
+    margin: 60px auto 20px auto;
+  }
+
+  .page-footer {
+    position: absolute;
+    bottom: 5px;
+    width: 100%;
+  }
+
+  .twitter span {
+    font-size: 15px;
+  }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-center">The Quote Machine</h1>
+    <div class="random-btn text-center">
+      <button id="btnNewQuote" type="button" class="btn btn-primary btn-lg">Give me new quote</button>
+      <span> </span>
+      <a id="twitter" class="twitter-share-button"
+      href="https://twitter.com/intent/tweet?text=..."
+      data-size="large">
+      <span class="btn btn-info btn-lg">Tweet</span></a>
+    </div>
+    <hr>
+    <div class="quote">
+      <div id="content">
+        ...
+      </div>
+      <footer>
+        <cite>- Author</cite>
+      </footer>
+    </div>
+  </div>
+  <footer class="page-footer">
+    <p class="text-center">
+      Developed by ThuanSB in FFC @ 2016
+    </p>
+  </footer>
+
+<script src="https://use.fontawesome.com/efb992329e.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+//Get quote
+var url = 'http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1';
+var twitterShareURL = 'https://twitter.com/intent/tweet?text=';
+function getQuote() {
+  // For bypass the cross origin issue:
+  $.getJSON(url + '&callback=', function(data) {
+    data[0].content;
+    data[0].title;
+    data[0].link;
+    if (data) {
+      $("#content").html(data[0].content);
+      //$("q").attribute('cite', data[0].link);
+      $("cite").html("- " + data[0].title);
+      $('#twitter').prop('href', twitterShareURL += data[0].content);
+    }
+  });
+}
+
+// Call getQoute() once load page
+getQuote();
+
+// Handle click event on newQuote button
+$("#btnNewQuote").click(function() {
+  getQuote();
+});
+</script>
+</body>
+</html>
