@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Weather App</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+  <link href='https://fonts.googleapis.com/css?family=Dancing+Script:700' rel='stylesheet' type='text/css'>
+  <style media="screen">
+    body {
+      background-color: black;
+    }
+
+    a:link {
+      text-decoration: none;
+    }
+
+    .icondiv {
+      line-height: 70px;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <h2>Hi,</h2>
+    <h2 id="city"></h2>
+    <div class="row">
+      <div class="col-xs-1">
+        <h2>
+          <span id="temp"></span>
+          <a id="cf" href="#"><span> &#8451;</span></a>
+        </h2>
+      </div>
+      <div class="col-xs-1 icondiv">
+        <img id="icon" src="" alt="" />
+      </div>
+    </div>
+  </div>
+  <script src="https://use.fontawesome.com/efb992329e.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+  var apiURL = 'http://api.openweathermap.org/data/2.5/weather?APPID=cc78d7df7415a685d75982c51c855bc0';
+  var iconURL = 'http://openweathermap.org/img/w/';
+  var isCelsius = true;
+
+  $(document).ready(function() {
+    getLoc();
+
+    // switch between Celcius and Farenheit
+    $('#cf').click(function(e) {
+      isCelsius = !isCelsius;
+      var symbol = isCelsius ? '&#8451;' : '&#8457;';
+      $(this).html('<span> ' + symbol + '</span>');
+      getLoc();
+    });
+
+    function getWeatherData(url) {
+      $.ajax({
+        url: url,
+        success: function (data) {
+          $('#temp').html(data.main.temp);
+          //data.weather.icon
+          $('#icon').prop('src', iconURL +  data.weather[0].icon + '.png');
+          $('#icon').prop('alt', data.weather.icon);
+        },
+        cache: false
+      });
+    }
+
+    function getLoc() {
+      $.ajax({
+        url: 'http://ipinfo.io/json',
+        success: function(data) {
+          var loc = data.loc.split(',');
+          $('#city').html(data.city);
+          var unit = isCelsius ? 'metric' : 'imperial';
+          getWeatherData(apiURL + '&lat=' + loc[0] + '&lon=' + loc[1] + '&units=' + unit);
+        }
+      });
+    }
+
+  });
+  </script>
+</body>
+</html>
