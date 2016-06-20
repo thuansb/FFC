@@ -40,12 +40,12 @@ function routeReducer(state = routeInitialState, action) {
 /**
  * Creates the main reducer with the asynchronously loaded ones
  */
-import fccwikiAppReducer from 'containers/FccwikiApp/reducer';
+import fccWikiAppReducer from 'containers/FccWikiApp/reducer';
 export default function createReducer(asyncReducers) {
   return combineReducers({
     route: routeReducer,
     global: globalReducer,
-    fccwikiApp: fccwikiAppReducer,
+    fccWikiApp: fccWikiAppReducer,
     ...asyncReducers,
   });
 }

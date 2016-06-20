@@ -1,8 +1,8 @@
 import expect from 'expect';
-import fccwikiAppReducer from '../reducer';
+import fccWikiAppReducer from '../reducer';
 
-describe('fccwikiAppReducer', () => {
+describe('fccWikiAppReducer', () => {
   it('returns the initial state', () => {
-    expect(fccwikiAppReducer(undefined, {})).toEqual({});
+    expect(fccWikiAppReducer(undefined, {})).toEqual({});
   });
 });

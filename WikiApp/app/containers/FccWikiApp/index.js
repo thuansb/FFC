@@ -1,8 +1,8 @@
 /*
- *
- * FccwikiApp
- *
- */
+*
+* FccwikiApp
+*
+*/
 
 import React from 'react';
 import SearchBar from 'react-search-bar';
@@ -10,7 +10,7 @@ import SearchResult from 'components/SearchResult';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import {
-  selectFccWikiApp,
+  selectSearchResult,
 } from './selectors';
 
 import {
@@ -28,13 +28,13 @@ class FccWikiApp extends React.Component {
             autoFocus
             placeholder="Search on Wikipedia"
             onChange={(input, resolve) => {
-              resolve(input);
+              resolve([]);
             }}
             onSubmit={this.props.onSubmit}
-          />
+            />
         </div>
         <div className={styles.searchResult}>
-          <SearchResult />
+          <SearchResult searchResult={this.props.searchResult}/>
         </div>
       </div>
     );
@@ -42,15 +42,18 @@ class FccWikiApp extends React.Component {
 }
 
 FccWikiApp.propTypes = {
-  onSubmit: React.PropTypes.function.required,
+  onSubmit: React.PropTypes.func,
+  searchResult: React.PropTypes.array,
 };
 
 function mapDispatchToProps(dispatch) {
   return {
-    onSubmit: (e) => dispatch(searchSubmit(e.target.value)),
+    onSubmit: (value) => dispatch(searchSubmit(value)),
   };
 }
 
 export default connect(createSelector(
-  selectFccWikiApp(),
-), mapDispatchToProps)(FccWikiApp);
+  selectSearchResult(),
+  (searchResult) => ({searchResult})
+),
+mapDispatchToProps)(FccWikiApp);

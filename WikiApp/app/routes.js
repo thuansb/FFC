@@ -59,8 +59,8 @@ export default function createRoutes(store) {
         const renderRoute = loadModule(cb);
 
         importModules.then(([reducer, sagas, component]) => {
-          injectAsyncReducer(store, 'fccWikiApp', reducer.default);
-          injectAsyncSagas(sagas.default);
+          injectReducer('fccWikiApp', reducer.default);
+          injectSagas(sagas.default);
           renderRoute(component);
         });
 

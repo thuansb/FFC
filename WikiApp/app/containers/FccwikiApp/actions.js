@@ -6,6 +6,7 @@
 
 import {
   SEARCH_SUBMIT,
+  SEARCH_RESULT_LOADED,
 } from './constants';
 
 export function searchSubmit(searchTerm) {
@@ -13,4 +14,11 @@ export function searchSubmit(searchTerm) {
     type: SEARCH_SUBMIT,
     searchTerm,
   };
+}
+
+export function searchResultLoaded(searchResult) {
+  return {
+    type: SEARCH_RESULT_LOADED,
+    searchResult,
+  }
 }
