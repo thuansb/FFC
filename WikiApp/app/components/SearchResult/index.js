@@ -23,7 +23,7 @@ import styles from './styles.css';
 
 const SearchResult = (props) => {
   let searchResultList;
-  if (props.searchResult[1]) {
+  if (props.searchResult) {
     searchResultList = props.searchResult[1].map((rs, idx) => {
       return (
         <div key={idx}>
@@ -36,8 +36,8 @@ const SearchResult = (props) => {
               </p>
             }
             secondaryTextLines={2}
-            onTouchTap={() => {window.open(props.searchResult[3][idx])}} />
-          <Divider inset={true} />
+          />
+          <Divider inset />
         </div>
       )
     });
@@ -53,9 +53,9 @@ const SearchResult = (props) => {
       </MuiThemeProvider>
     </div>
   );
-}
+};
 
 SearchResult.propTypes = {
-  searchResult: React.PropTypes.array
-}
+  searchResult: React.PropTypes.array,
+};
 export default SearchResult;

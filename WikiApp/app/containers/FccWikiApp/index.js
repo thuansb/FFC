@@ -5,7 +5,7 @@
 */
 
 import React from 'react';
-import SearchBar from 'react-search-bar';
+import SearchBar from 'components/SearchBar';
 import SearchResult from 'components/SearchResult';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
@@ -34,7 +34,7 @@ class FccWikiApp extends React.Component {
             />
         </div>
         <div className={styles.searchResult}>
-          <SearchResult searchResult={this.props.searchResult}/>
+          <SearchResult searchResult={this.props.searchResult} />
         </div>
       </div>
     );
@@ -54,6 +54,6 @@ function mapDispatchToProps(dispatch) {
 
 export default connect(createSelector(
   selectSearchResult(),
-  (searchResult) => ({searchResult})
+  (searchResult) => ({ searchResult })
 ),
 mapDispatchToProps)(FccWikiApp);
