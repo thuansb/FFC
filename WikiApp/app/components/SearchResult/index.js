@@ -14,9 +14,6 @@ import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
 
 import styles from './styles.css';
 
@@ -36,6 +33,7 @@ const SearchResult = (props) => {
               </p>
             }
             secondaryTextLines={2}
+            onTouchTap={e => window.open(props.searchResult[3][idx])}
           />
           <Divider inset />
         </div>
@@ -45,12 +43,10 @@ const SearchResult = (props) => {
 
   return (
     <div className={styles.searchResult}>
-      <MuiThemeProvider muiTheme={getMuiTheme()}>
         <List>
           <Subheader>Wiki search result</Subheader>
           {searchResultList}
         </List>
-      </MuiThemeProvider>
     </div>
   );
 };

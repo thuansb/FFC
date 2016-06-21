@@ -1,9 +1,9 @@
 /**
- * app.js
- *
- * This is the entry file for the application, only setup and boilerplate
- * code.
- */
+* app.js
+*
+* This is the entry file for the application, only setup and boilerplate
+* code.
+*/
 
 // Needed for redux-saga es6 generator support
 import 'babel-polyfill';
@@ -12,7 +12,6 @@ import 'babel-polyfill';
 import 'file?name=[name].[ext]!./favicon.ico';
 import 'file?name=[name].[ext]!./manifest.json';
 import 'file?name=[name].[ext]!./.htaccess';
-
 // Import all the third party stuff
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -22,6 +21,9 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import FontFaceObserver from 'fontfaceobserver';
 import useScroll from 'react-router-scroll';
 import configureStore from './store';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
 // Observe loading of Open Sans (to remove open sans, remove the <link> tag in
 // the index.html file and this observer)
@@ -58,31 +60,37 @@ const rootRoute = {
   childRoutes: createRoutes(store),
 };
 
+// Needed for onTouchTap
+// http://stackoverflow.com/a/34015469/988941
+injectTapEventPlugin();
+
 ReactDOM.render(
   <Provider store={store}>
-    <Router
-      history={history}
-      routes={rootRoute}
-      render={
-        // Scroll to top when going to a new page, imitating default browser
-        // behaviour
-        applyRouterMiddleware(
-          useScroll(
-            (prevProps, props) => {
-              if (!prevProps || !props) {
+    <MuiThemeProvider muiTheme={getMuiTheme()} >
+      <Router
+        history={history}
+        routes={rootRoute}
+        render={
+          // Scroll to top when going to a new page, imitating default browser
+          // behaviour
+          applyRouterMiddleware(
+            useScroll(
+              (prevProps, props) => {
+                if (!prevProps || !props) {
+                  return true;
+                }
+
+                if (prevProps.location.pathname !== props.location.pathname) {
+                  return [0, 0];
+                }
+
                 return true;
               }
-
-              if (prevProps.location.pathname !== props.location.pathname) {
-                return [0, 0];
-              }
-
-              return true;
-            }
+            )
           )
-        )
-      }
-    />
+        }
+        />
+    </MuiThemeProvider>
   </Provider>,
   document.getElementById('app')
 );

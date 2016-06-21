@@ -1,8 +1,8 @@
 /*
- *
- * FccwikiApp reducer
- *
- */
+*
+* FccwikiApp reducer
+*
+*/
 
 import { fromJS } from 'immutable';
 import {
@@ -17,11 +17,17 @@ const initialState = fromJS({
 function fccWikiAppReducer(state = initialState, action) {
   switch (action.type) {
     case SEARCH_SUBMIT:
-      return state.set('searchTerm', action.searchTerm);
+    console.log(state);
+    return state
+    .set('searchTerm', action.searchTerm)
+    .set('loading', true);
     case SEARCH_RESULT_LOADED:
-      return state.set('searchResult', action.searchResult);
+    console.log(state);
+    return state
+    .set('searchResult', action.searchResult)
+    .set('loading', false);
     default:
-      return state;
+    return state;
   }
 }
 

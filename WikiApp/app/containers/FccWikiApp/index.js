@@ -6,12 +6,18 @@
 
 import React from 'react';
 import SearchBar from 'components/SearchBar';
+import SearchBox from 'components/SearchBox';
 import SearchResult from 'components/SearchResult';
+import LoadingIndicator from 'components/LoadingIndicator';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import {
   selectSearchResult,
 } from './selectors';
+
+import {
+  selectLoading,
+} from 'containers/App/selectors'
 
 import {
   searchSubmit,
@@ -21,20 +27,23 @@ import styles from './styles.css';
 class FccWikiApp extends React.Component {
 
   render() {
+    let mainContent = null;
+    if (this.props.isLoading) {
+      mainContent = (<LoadingIndicator />);
+    } else {
+      mainContent = (<SearchResult searchResult={this.props.searchResult} />);
+    }
+
     return (
       <div>
         <div className={styles.searchForm}>
-          <SearchBar
-            autoFocus
-            placeholder="Search on Wikipedia"
-            onChange={(input, resolve) => {
-              resolve([]);
-            }}
-            onSubmit={this.props.onSubmit}
-            />
+          <SearchBox
+            onSearchSubmit={this.props.onSubmit}
+            hintText="Search Wiki"
+          />
         </div>
         <div className={styles.searchResult}>
-          <SearchResult searchResult={this.props.searchResult} />
+          {mainContent}
         </div>
       </div>
     );
@@ -54,6 +63,7 @@ function mapDispatchToProps(dispatch) {
 
 export default connect(createSelector(
   selectSearchResult(),
-  (searchResult) => ({ searchResult })
+  selectLoading(),
+  (searchResult, isLoading) => ({ searchResult, isLoading })
 ),
 mapDispatchToProps)(FccWikiApp);
