@@ -39,7 +39,7 @@ const SearchResult = (props) => {
           />
           <Divider inset />
         </div>
-      );
+      )
     });
   }
 
@@ -47,7 +47,7 @@ const SearchResult = (props) => {
     <div className={styles.searchResult}>
       <MuiThemeProvider muiTheme={getMuiTheme()}>
         <List>
-          <Subheader>TwitchTV List</Subheader>
+          <Subheader>Wiki search result</Subheader>
           {searchResultList}
         </List>
       </MuiThemeProvider>

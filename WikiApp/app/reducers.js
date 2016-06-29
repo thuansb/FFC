@@ -41,11 +41,13 @@ function routeReducer(state = routeInitialState, action) {
  * Creates the main reducer with the asynchronously loaded ones
  */
 import fccWikiAppReducer from 'containers/FccWikiApp/reducer';
+import twitchTvReducer from 'containers/TwitchTv/reducer';
 export default function createReducer(asyncReducers) {
   return combineReducers({
     route: routeReducer,
     global: globalReducer,
     fccWikiApp: fccWikiAppReducer,
+    twitchTv: twitchTvReducer,
     ...asyncReducers,
   });
 }
